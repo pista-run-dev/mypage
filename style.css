@@ -207,12 +207,9 @@ body::after {
   width: 68px;
   height: 68px;
   background: linear-gradient(135deg, rgba(10, 132, 255, 0.2), rgba(191, 90, 242, 0.2));
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
+  object-fit: cover;
   box-shadow: 0 0 20px rgba(10, 132, 255, 0.15);
 }
 
