@@ -1,11 +1,11 @@
 <!-- MCP integration test: PR creation and merge verification -->
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="dark">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#050510" id="meta-theme-color">
   <meta name="description" content="市民ランナーの機材と記録 — ぴすた / Pista">
   <meta property="og:title" content="ぴすた / Pista">
   <meta property="og:description" content="走りをアップデートするギア＆テック情報">
@@ -17,6 +17,12 @@
 </head>
 
 <body>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="theme-toggle" aria-label="テーマを切り替える">
+    <span class="icon-sun">☀️</span>
+    <span class="icon-moon">🌙</span>
+  </button>
 
   <main class="bento">
 
@@ -180,5 +186,32 @@
   </footer>
 
 </body>
+
+<script>
+  (function () {
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    const metaThemeColor = document.getElementById('meta-theme-color');
+
+    // Restore saved theme
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      html.setAttribute('data-theme', saved);
+      updateMetaColor(saved);
+    }
+
+    toggle.addEventListener('click', function () {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateMetaColor(next);
+    });
+
+    function updateMetaColor(theme) {
+      metaThemeColor.setAttribute('content', theme === 'dark' ? '#050510' : '#f2f2f7');
+    }
+  })();
+</script>
 
 </html>
