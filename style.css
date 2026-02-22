@@ -21,7 +21,8 @@ ul { list-style: none; }
   /* Brand colours */
   --c-instagram: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   --c-x:         #000;
-  --c-note:      #41c9b0;
+  --c-strava:    #fc4c02;
+  --c-note:      #41c9b4;
   --c-runtrip:   #ff6835;
 
   /* Layout */
@@ -60,7 +61,8 @@ body {
   grid-template-areas:
     "profile   profile"
     "instagram x"
-    "note      runtrip"
+    "strava    note"
+    "runtrip   runtrip"
     "teaser    teaser";
   gap: var(--gap);
 }
@@ -193,7 +195,8 @@ body {
 /* Grid area assignment */
 .card--instagram { grid-area: instagram; }
 .card--x         { grid-area: x;         }
-.card--note      { grid-area: note;      }
+.card--strava      { grid-area: strava;      }
+.card--note      { grid-area: note;        }
 .card--runtrip   { grid-area: runtrip;   }
 
 .link-top {
@@ -221,6 +224,7 @@ body {
 
 .card--instagram .brand-icon { background: var(--c-instagram); }
 .card--x         .brand-icon { background: var(--c-x); border: 1px solid rgba(255, 255, 255, 0.15); }
+.card--strava      .brand-icon { background: var(--c-strava); }
 .card--note      .brand-icon { background: var(--c-note); }
 .card--runtrip   .brand-icon { background: var(--c-runtrip); }
 
@@ -338,8 +342,9 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
       "profile   profile   profile"
-      "instagram x         note"
-      "runtrip   teaser    teaser";
+      "instagram x         strava"
+      "note      runtrip   ."
+      "teaser    teaser    teaser";
   }
 }
 
