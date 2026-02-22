@@ -1,37 +1,49 @@
 /* ── Reset ──────────────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-ul { list-style: none; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
 
 /* ── Design Tokens ──────────────────────────────────────────────────────── */
 :root {
   /* Surface — glassmorphism */
-  --bg:             #050510;
-  --surface:        rgba(255, 255, 255, 0.04);
+  --bg: #050510;
+  --surface: rgba(255, 255, 255, 0.04);
   --surface-raised: rgba(255, 255, 255, 0.08);
-  --border:         rgba(255, 255, 255, 0.10);
-  --glass-blur:     16px;
+  --border: rgba(255, 255, 255, 0.10);
+  --glass-blur: 16px;
 
   /* Text */
-  --text:           #f5f5f7;
-  --text-2:         #a1a1a6;
-  --text-3:         #48484a;
+  --text: #f5f5f7;
+  --text-2: #a1a1a6;
+  --text-3: #48484a;
 
   /* Accent */
-  --blue:           #0a84ff;
-  --purple:         #bf5af2;
-  --teal:           #64d2ff;
+  --blue: #0a84ff;
+  --purple: #bf5af2;
+  --teal: #64d2ff;
 
   /* Brand colours */
   --c-instagram: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  --c-x:         #000;
-  --c-note:      #41c9b0;
-  --c-runtrip:   #ff6835;
+  --c-x: #000;
+  --c-note: #41c9b4;
+  --c-runtrip: #3AB483;
+  --c-strava: #FC4C02;
+  --c-youtube: #FF0000;
+  --c-spotify: #1DB954;
 
   /* Layout */
-  --gap:    10px;
+  --gap: 10px;
   --r-card: 22px;
   --r-icon: 12px;
-  --max-w:  480px;
+  --max-w: 480px;
 }
 
 /* ── Base ───────────────────────────────────────────────────────────────── */
@@ -71,10 +83,25 @@ body::before {
 }
 
 @keyframes meshShift {
-  0%   { transform: scale(1)   translate(0, 0);    opacity: 1;   }
-  33%  { transform: scale(1.1) translate(2%, -3%);  opacity: 0.9; }
-  66%  { transform: scale(1.05) translate(-2%, 2%); opacity: 1;   }
-  100% { transform: scale(1.15) translate(3%, -1%); opacity: 0.85; }
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+
+  33% {
+    transform: scale(1.1) translate(2%, -3%);
+    opacity: 0.9;
+  }
+
+  66% {
+    transform: scale(1.05) translate(-2%, 2%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.15) translate(3%, -1%);
+    opacity: 0.85;
+  }
 }
 
 /* Noise texture overlay for premium feel */
@@ -98,6 +125,8 @@ body::after {
     "profile   profile"
     "instagram x"
     "note      runtrip"
+    "strava    youtube"
+    "spotify   spotify"
     "teaser    teaser";
   gap: var(--gap);
 }
@@ -117,12 +146,41 @@ body::after {
   animation: cardEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
-.card:nth-child(1) { animation-delay: 0.0s; }
-.card:nth-child(2) { animation-delay: 0.08s; }
-.card:nth-child(3) { animation-delay: 0.14s; }
-.card:nth-child(4) { animation-delay: 0.20s; }
-.card:nth-child(5) { animation-delay: 0.26s; }
-.card:nth-child(6) { animation-delay: 0.32s; }
+.card:nth-child(1) {
+  animation-delay: 0.0s;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0.14s;
+}
+
+.card:nth-child(4) {
+  animation-delay: 0.20s;
+}
+
+.card:nth-child(5) {
+  animation-delay: 0.26s;
+}
+
+.card:nth-child(6) {
+  animation-delay: 0.32s;
+}
+
+.card:nth-child(7) {
+  animation-delay: 0.38s;
+}
+
+.card:nth-child(8) {
+  animation-delay: 0.44s;
+}
+
+.card:nth-child(9) {
+  animation-delay: 0.50s;
+}
 
 @keyframes cardEnter {
   from {
@@ -159,7 +217,8 @@ body::after {
 }
 
 .profile-info {
-  min-width: 0; /* prevent text overflow blowout */
+  min-width: 0;
+  /* prevent text overflow blowout */
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -251,10 +310,33 @@ body::after {
     0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.card--instagram:hover { box-shadow: 0 8px 32px rgba(225, 48, 108, 0.15), 0 0 0 1px rgba(225, 48, 108, 0.2); }
-.card--x:hover         { box-shadow: 0 8px 32px rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.15); }
-.card--note:hover      { box-shadow: 0 8px 32px rgba(65, 201, 176, 0.15), 0 0 0 1px rgba(65, 201, 176, 0.2); }
-.card--runtrip:hover   { box-shadow: 0 8px 32px rgba(255, 104, 53, 0.15), 0 0 0 1px rgba(255, 104, 53, 0.2); }
+.card--instagram:hover {
+  box-shadow: 0 8px 32px rgba(225, 48, 108, 0.15), 0 0 0 1px rgba(225, 48, 108, 0.2);
+}
+
+.card--x:hover {
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.card--note:hover {
+  box-shadow: 0 8px 32px rgba(65, 201, 180, 0.15), 0 0 0 1px rgba(65, 201, 180, 0.2);
+}
+
+.card--runtrip:hover {
+  box-shadow: 0 8px 32px rgba(58, 180, 131, 0.15), 0 0 0 1px rgba(58, 180, 131, 0.2);
+}
+
+.card--strava:hover {
+  box-shadow: 0 8px 32px rgba(252, 76, 2, 0.15), 0 0 0 1px rgba(252, 76, 2, 0.2);
+}
+
+.card--youtube:hover {
+  box-shadow: 0 8px 32px rgba(255, 0, 0, 0.15), 0 0 0 1px rgba(255, 0, 0, 0.2);
+}
+
+.card--spotify:hover {
+  box-shadow: 0 8px 32px rgba(29, 185, 84, 0.15), 0 0 0 1px rgba(29, 185, 84, 0.2);
+}
 
 .card--link:active {
   transform: scale(0.97);
@@ -266,10 +348,33 @@ body::after {
 }
 
 /* Grid area assignment */
-.card--instagram { grid-area: instagram; }
-.card--x         { grid-area: x;         }
-.card--note      { grid-area: note;      }
-.card--runtrip   { grid-area: runtrip;   }
+.card--instagram {
+  grid-area: instagram;
+}
+
+.card--x {
+  grid-area: x;
+}
+
+.card--note {
+  grid-area: note;
+}
+
+.card--runtrip {
+  grid-area: runtrip;
+}
+
+.card--strava {
+  grid-area: strava;
+}
+
+.card--youtube {
+  grid-area: youtube;
+}
+
+.card--spotify {
+  grid-area: spotify;
+}
 
 .link-top {
   display: flex;
@@ -294,10 +399,35 @@ body::after {
   height: 20px;
 }
 
-.card--instagram .brand-icon { background: var(--c-instagram); }
-.card--x         .brand-icon { background: var(--c-x); border: 1px solid rgba(255, 255, 255, 0.15); }
-.card--note      .brand-icon { background: var(--c-note); }
-.card--runtrip   .brand-icon { background: var(--c-runtrip); }
+.card--instagram .brand-icon {
+  background: var(--c-instagram);
+}
+
+.card--x .brand-icon {
+  background: var(--c-x);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.card--note .brand-icon {
+  background: var(--c-note);
+}
+
+.card--runtrip .brand-icon {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card--strava .brand-icon {
+  background: var(--c-strava);
+}
+
+.card--youtube .brand-icon {
+  background: var(--c-youtube);
+}
+
+.card--spotify .brand-icon {
+  background: var(--c-spotify);
+}
 
 .link-arrow {
   font-size: 14px;
@@ -360,8 +490,15 @@ body::after {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1;    }
-  50%       { opacity: 0.2; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
 }
 
 .teaser-title {
@@ -415,14 +552,17 @@ body::after {
 
 /* ── Responsive: wider (≥ 600px) ────────────────────────────────────────── */
 @media (min-width: 600px) {
-  :root { --r-card: 26px; }
+  :root {
+    --r-card: 26px;
+  }
 
   .bento {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
       "profile   profile   profile"
       "instagram x         note"
-      "runtrip   teaser    teaser";
+      "runtrip   strava    youtube"
+      "spotify   teaser    teaser";
   }
 }
 
@@ -431,6 +571,7 @@ body::after {
   .card--profile {
     flex-direction: column;
   }
+
   .name {
     font-size: 18px;
     white-space: normal;
