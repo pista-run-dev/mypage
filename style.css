@@ -1,35 +1,66 @@
 /* ── Reset ──────────────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-ul { list-style: none; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
 
 /* ── Design Tokens ──────────────────────────────────────────────────────── */
 :root {
-  /* Surface */
-  --bg:             #000;
-  --surface:        #111;
-  --surface-raised: #1c1c1e;
-  --border:         rgba(255, 255, 255, 0.08);
-
-  /* Text */
-  --text:           #f5f5f7;
-  --text-2:         #a1a1a6;
-  --text-3:         #48484a;
-
-  /* Accent */
-  --blue:           #0a84ff;
-
-  /* Brand colours */
-  --c-instagram: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  --c-x:         #000;
-  --c-strava:    #fc4c02;
-  --c-note:      #41c9b4;
-  --c-runtrip:   #ff6835;
-
-  /* Layout */
-  --gap:    10px;
+  /* Layout (shared) */
+  --gap: 10px;
   --r-card: 22px;
   --r-icon: 12px;
-  --max-w:  480px;
+  --max-w: 480px;
+  --glass-blur: 16px;
+
+  /* Accent (shared) */
+  --blue: #0a84ff;
+  --purple: #bf5af2;
+  --teal: #64d2ff;
+
+  /* Brand colours (shared) */
+  --c-instagram: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --c-x: #000;
+  --c-note: #41c9b4;
+  --c-runtrip: #3AB483;
+  --c-strava: #FC4C02;
+  --c-youtube: #FF0000;
+  --c-spotify: #1DB954;
+}
+
+/* ── Dark Theme ────────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg: #050510;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-raised: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.10);
+  --text: #f5f5f7;
+  --text-2: #a1a1a6;
+  --text-3: #48484a;
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  --card-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --mesh-opacity: 1;
+}
+
+/* ── Light Theme ───────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #f2f2f7;
+  --surface: rgba(255, 255, 255, 0.85);
+  --surface-raised: rgba(0, 0, 0, 0.04);
+  --border: rgba(0, 0, 0, 0.08);
+  --text: #1d1d1f;
+  --text-2: #6e6e73;
+  --text-3: #aeaeb2;
+  --card-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  --card-inset: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --mesh-opacity: 0.5;
 }
 
 /* ── Base ───────────────────────────────────────────────────────────────── */
@@ -50,6 +81,56 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 20px 14px 48px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Animated Mesh Gradient Background ─────────────────────────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(10, 132, 255, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 30%, rgba(191, 90, 242, 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 50% 85%, rgba(100, 210, 255, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 50% at 10% 70%, rgba(255, 104, 53, 0.08) 0%, transparent 50%);
+  animation: meshShift 12s ease-in-out infinite alternate;
+  opacity: var(--mesh-opacity);
+}
+
+@keyframes meshShift {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+
+  33% {
+    transform: scale(1.1) translate(2%, -3%);
+    opacity: 0.9;
+  }
+
+  66% {
+    transform: scale(1.05) translate(-2%, 2%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.15) translate(3%, -1%);
+    opacity: 0.85;
+  }
+}
+
+/* Noise texture overlay for premium feel */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
 }
 
 /* ── Bento Grid ─────────────────────────────────────────────────────────── */
@@ -61,19 +142,67 @@ body {
   grid-template-areas:
     "profile   profile"
     "instagram x"
-    "strava    note"
-    "runtrip   runtrip"
+    "note      runtrip"
+    "strava    youtube"
+    "spotify   spotify"
     "teaser    teaser";
   gap: var(--gap);
 }
 
-/* ── Card base ──────────────────────────────────────────────────────────── */
+/* ── Card base — glassmorphism ──────────────────────────────────────────── */
 .card {
   background: var(--surface);
   border-radius: var(--r-card);
   border: 1px solid var(--border);
   overflow: hidden;
   position: relative;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--card-shadow), var(--card-inset);
+  animation: cardEnter 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.card:nth-child(1) {
+  animation-delay: 0.0s;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0.14s;
+}
+
+.card:nth-child(4) {
+  animation-delay: 0.20s;
+}
+
+.card:nth-child(5) {
+  animation-delay: 0.26s;
+}
+
+.card:nth-child(6) {
+  animation-delay: 0.32s;
+}
+
+.card:nth-child(7) {
+  animation-delay: 0.38s;
+}
+
+.card:nth-child(8) {
+  animation-delay: 0.44s;
+}
+
+.card:nth-child(9) {
+  animation-delay: 0.50s;
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
 }
 
 /* ── Profile ────────────────────────────────────────────────────────────── */
@@ -83,23 +212,26 @@ body {
   align-items: flex-start;
   gap: 16px;
   padding: 24px 20px;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 0%, rgba(10, 132, 255, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(191, 90, 242, 0.08) 0%, transparent 50%),
+    var(--surface);
 }
 
 .avatar {
   flex-shrink: 0;
   width: 68px;
   height: 68px;
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(10, 132, 255, 0.2), rgba(191, 90, 242, 0.2));
+  border: 2px solid rgba(255, 255, 255, 0.15);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(10, 132, 255, 0.15);
 }
 
 .profile-info {
-  min-width: 0; /* prevent text overflow blowout */
+  min-width: 0;
+  /* prevent text overflow blowout */
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -175,12 +307,48 @@ body {
   text-decoration: none;
   color: inherit;
   -webkit-tap-highlight-color: transparent;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
 .card--link:hover {
-  background: var(--surface-raised);
-  transform: scale(1.018);
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.card--instagram:hover {
+  box-shadow: 0 8px 32px rgba(225, 48, 108, 0.15), 0 0 0 1px rgba(225, 48, 108, 0.2);
+}
+
+.card--x:hover {
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.card--note:hover {
+  box-shadow: 0 8px 32px rgba(65, 201, 180, 0.15), 0 0 0 1px rgba(65, 201, 180, 0.2);
+}
+
+.card--runtrip:hover {
+  box-shadow: 0 8px 32px rgba(58, 180, 131, 0.15), 0 0 0 1px rgba(58, 180, 131, 0.2);
+}
+
+.card--strava:hover {
+  box-shadow: 0 8px 32px rgba(252, 76, 2, 0.15), 0 0 0 1px rgba(252, 76, 2, 0.2);
+}
+
+.card--youtube:hover {
+  box-shadow: 0 8px 32px rgba(255, 0, 0, 0.15), 0 0 0 1px rgba(255, 0, 0, 0.2);
+}
+
+.card--spotify:hover {
+  box-shadow: 0 8px 32px rgba(29, 185, 84, 0.15), 0 0 0 1px rgba(29, 185, 84, 0.2);
 }
 
 .card--link:active {
@@ -193,11 +361,33 @@ body {
 }
 
 /* Grid area assignment */
-.card--instagram { grid-area: instagram; }
-.card--x         { grid-area: x;         }
-.card--strava      { grid-area: strava;      }
-.card--note      { grid-area: note;        }
-.card--runtrip   { grid-area: runtrip;   }
+.card--instagram {
+  grid-area: instagram;
+}
+
+.card--x {
+  grid-area: x;
+}
+
+.card--note {
+  grid-area: note;
+}
+
+.card--runtrip {
+  grid-area: runtrip;
+}
+
+.card--strava {
+  grid-area: strava;
+}
+
+.card--youtube {
+  grid-area: youtube;
+}
+
+.card--spotify {
+  grid-area: spotify;
+}
 
 .link-top {
   display: flex;
@@ -222,11 +412,35 @@ body {
   height: 20px;
 }
 
-.card--instagram .brand-icon { background: var(--c-instagram); }
-.card--x         .brand-icon { background: var(--c-x); border: 1px solid rgba(255, 255, 255, 0.15); }
-.card--strava      .brand-icon { background: var(--c-strava); }
-.card--note      .brand-icon { background: var(--c-note); }
-.card--runtrip   .brand-icon { background: var(--c-runtrip); }
+.card--instagram .brand-icon {
+  background: var(--c-instagram);
+}
+
+.card--x .brand-icon {
+  background: var(--c-x);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.card--note .brand-icon {
+  background: var(--c-note);
+}
+
+.card--runtrip .brand-icon {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.card--strava .brand-icon {
+  background: var(--c-strava);
+}
+
+.card--youtube .brand-icon {
+  background: var(--c-youtube);
+}
+
+.card--spotify .brand-icon {
+  background: var(--c-spotify);
+}
 
 .link-arrow {
   font-size: 14px;
@@ -252,8 +466,16 @@ body {
   grid-area: teaser;
   padding: 26px 22px;
   background:
-    radial-gradient(ellipse 55% 70% at 94% 6%, rgba(10, 132, 255, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 70% at 94% 6%, rgba(10, 132, 255, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 10% 90%, rgba(191, 90, 242, 0.10) 0%, transparent 50%),
     var(--surface);
+  transition: box-shadow 0.3s ease;
+}
+
+.card--teaser:hover {
+  box-shadow:
+    0 8px 32px rgba(10, 132, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .teaser-badge {
@@ -281,8 +503,15 @@ body {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1;    }
-  50%       { opacity: 0.2; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
 }
 
 .teaser-title {
@@ -336,15 +565,17 @@ body {
 
 /* ── Responsive: wider (≥ 600px) ────────────────────────────────────────── */
 @media (min-width: 600px) {
-  :root { --r-card: 26px; }
+  :root {
+    --r-card: 26px;
+  }
 
   .bento {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
       "profile   profile   profile"
-      "instagram x         strava"
-      "note      runtrip   ."
-      "teaser    teaser    teaser";
+      "instagram x         note"
+      "runtrip   strava    youtube"
+      "spotify   teaser    teaser";
   }
 }
 
@@ -353,8 +584,95 @@ body {
   .card--profile {
     flex-direction: column;
   }
+
   .name {
     font-size: 18px;
     white-space: normal;
   }
+}
+
+/* ── Light theme overrides ─────────────────────────────────────────────── */
+[data-theme="light"] .card--x .brand-icon {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .card--link:hover {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .avatar {
+  background: linear-gradient(135deg, rgba(10, 132, 255, 0.12), rgba(191, 90, 242, 0.12));
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 20px rgba(10, 132, 255, 0.08);
+}
+
+[data-theme="light"] .pb {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] body::after {
+  opacity: 0.015;
+}
+
+/* ── Theme Toggle Button ───────────────────────────────────────────────── */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text);
+  transition: transform 0.25s ease, background 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  background: var(--surface-raised);
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  position: absolute;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+[data-theme="light"] .theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+  opacity: 1;
+  transform: rotate(0deg);
 }
