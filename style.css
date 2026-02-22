@@ -410,8 +410,8 @@ body::after {
 }
 
 .card--runtrip .brand-icon {
-  background: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .card--strava .brand-icon {
