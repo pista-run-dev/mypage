@@ -442,6 +442,60 @@ body::after {
   background: var(--c-spotify);
 }
 
+/* ── Brand-icon glow (dark mode) ─────────────────────────────────────── */
+[data-theme="dark"] .card--instagram .brand-icon {
+  box-shadow: 0 2px 12px rgba(225, 48, 108, 0.45), 0 4px 24px rgba(225, 48, 108, 0.18);
+}
+
+[data-theme="dark"] .card--x .brand-icon {
+  box-shadow: 0 2px 12px rgba(255, 255, 255, 0.18), 0 4px 24px rgba(255, 255, 255, 0.07);
+}
+
+[data-theme="dark"] .card--note .brand-icon {
+  box-shadow: 0 2px 12px rgba(65, 201, 180, 0.45), 0 4px 24px rgba(65, 201, 180, 0.18);
+}
+
+[data-theme="dark"] .card--runtrip .brand-icon {
+  box-shadow: 0 2px 12px rgba(58, 180, 131, 0.45), 0 4px 24px rgba(58, 180, 131, 0.18);
+}
+
+[data-theme="dark"] .card--strava .brand-icon {
+  box-shadow: 0 2px 12px rgba(252, 76, 2, 0.45), 0 4px 24px rgba(252, 76, 2, 0.18);
+}
+
+[data-theme="dark"] .card--youtube .brand-icon {
+  box-shadow: 0 2px 12px rgba(255, 0, 0, 0.45), 0 4px 24px rgba(255, 0, 0, 0.18);
+}
+
+[data-theme="dark"] .card--spotify .brand-icon {
+  box-shadow: 0 2px 12px rgba(29, 185, 84, 0.45), 0 4px 24px rgba(29, 185, 84, 0.18);
+}
+
+/* ── Brand-icon glow (light mode — subtle) ───────────────────────────── */
+[data-theme="light"] .card--instagram .brand-icon {
+  box-shadow: 0 2px 10px rgba(225, 48, 108, 0.22);
+}
+
+[data-theme="light"] .card--note .brand-icon {
+  box-shadow: 0 2px 10px rgba(65, 201, 180, 0.22);
+}
+
+[data-theme="light"] .card--runtrip .brand-icon {
+  box-shadow: 0 2px 10px rgba(58, 180, 131, 0.22);
+}
+
+[data-theme="light"] .card--strava .brand-icon {
+  box-shadow: 0 2px 10px rgba(252, 76, 2, 0.22);
+}
+
+[data-theme="light"] .card--youtube .brand-icon {
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.22);
+}
+
+[data-theme="light"] .card--spotify .brand-icon {
+  box-shadow: 0 2px 10px rgba(29, 185, 84, 0.22);
+}
+
 .link-arrow {
   font-size: 14px;
   color: var(--text-3);
