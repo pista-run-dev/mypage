@@ -39,7 +39,9 @@
 
     <!-- ── Profile ─────────────────────────────────────────── -->
     <div class="card card--profile">
-      <img class="avatar" src="avatar.jpg" alt="ぴすた プロフィール画像">
+      <span class="avatar-wrap">
+        <img class="avatar" src="avatar.jpg" alt="ぴすた プロフィール画像">
+      </span>
       <div class="profile-info">
         <h1 class="name">ぴすた <span class="name-roman">Pista</span></h1>
         <p class="tagline">走りをアップデートするギア＆テック情報</p>
@@ -221,6 +223,46 @@
 </body>
 
 <script>
+  /* ── 3-D card tilt + torch-light (pointer devices only) ── */
+  (function () {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const cards = document.querySelectorAll('.card--link');
+
+    cards.forEach(function (card) {
+      var leaveTimer;
+
+      card.addEventListener('mouseenter', function () {
+        clearTimeout(leaveTimer);
+        card.style.transition =
+          'box-shadow 0.25s ease, border-color 0.25s ease, background 0.15s ease';
+      });
+
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        var y = (e.clientY - rect.top) / rect.height;
+        var rX = (0.5 - y) * 14;
+        var rY = (x - 0.5) * 14;
+        card.style.transform =
+          'perspective(480px) rotateX(' + rX + 'deg) rotateY(' + rY + 'deg) translateY(-3px) scale(1.02)';
+        card.style.setProperty('--mouse-x', (x * 100) + '%');
+        card.style.setProperty('--mouse-y', (y * 100) + '%');
+      });
+
+      card.addEventListener('mouseleave', function () {
+        card.style.transition =
+          'background 0.4s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease';
+        card.style.transform = '';
+        leaveTimer = setTimeout(function () {
+          card.style.setProperty('--mouse-x', '50%');
+          card.style.setProperty('--mouse-y', '50%');
+        }, 450);
+      });
+    });
+  })();
+
+  /* ── Theme toggle ── */
   (function () {
     const toggle = document.getElementById('theme-toggle');
     const html = document.documentElement;
