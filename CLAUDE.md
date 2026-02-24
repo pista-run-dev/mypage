@@ -226,6 +226,4 @@ spotify   teaser    teaser
 ## 既知の問題 / メモ
 
 - YouTube と Spotify のカードは現在 `href="#"` のまま（プレースホルダー、実際のプロフィールに未接続）
-- HTML 内に Strava カードが2つあります（`index.html:101` と `index.html:160`）— 2つ目は重複と思われ、意図したグリッドレイアウトと照らし合わせて整理が必要
-- グリッドテンプレートには `spotify` エリアが定義されているが、2つ目の Strava カードが本来 `strava` エリアとして意図されていた場所を占有している可能性あり — カードを編集する前にレイアウトの意図を確認すること
 - コミットは SSH キー（`/home/claude/.ssh/commit_signing_key.pub`）で GPG 署名されています
